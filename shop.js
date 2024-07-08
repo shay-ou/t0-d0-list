@@ -30,4 +30,4 @@ addBtn.addEventListener("click", function () {
     if (inputValue.trim() !== "") {
         push(shoppingListInDB, { text: inputValue, checked: false });
         clearInputField();
-    }
+    }})
