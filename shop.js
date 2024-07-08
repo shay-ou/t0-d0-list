@@ -5,7 +5,16 @@ const appSettings = {
 }
 const app = initializeApp(appSettings)
 const database = getDatabase(app)
-const shoppingListInDB = ref(database, "shoppingList")
+function getUID(){
+ let uid=localStorage.getItem("userUID")
+ if (!uid) {
+        uid = 'uid-' + Math.random().toString(36).substr(2, 16);
+        localStorage.setItem("userUID", uid);
+    }
+    return uid;
+}
+const userUID=getUID()
+const shoppingListInDB = ref(database, `shoppingList/${userUID}`)
 let inputEl = document.getElementById("input-field")
 let addBtn = document.getElementById("add-btn")
 let ulEl = document.getElementById("shopping-list")
@@ -65,7 +74,7 @@ function addToCart(item) {
         newEl.style.textDecoration = "none"
     }
     checkbox.addEventListener("change", function () {
-        let exactLocationOfItemInDB = ref(database, `shoppingList/${itemID}`)
+        let exactLocationOfItemInDB = ref(database,  shoppingList/${userUID}/${itemID}`)
         update(exactLocationOfItemInDB, {
             checked: checkbox.checked
         })
